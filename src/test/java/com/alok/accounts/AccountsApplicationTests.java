@@ -1,0 +1,10 @@
+package com.alok.accounts;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class AccountsApplicationTests {
+    @Test
+    public void contextLoads() {}
+}
