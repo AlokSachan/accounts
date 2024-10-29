@@ -252,7 +252,7 @@ public class AccountsController {
     )
     @GetMapping("/contact-info")
     public ResponseEntity<AccountsContactInfoDto> getContactInfo() {
-        log.info("contactDetails.name: {}", accountsContactInfoDto.contactDetails().get("name"));
+        log.info("contactDetails.name: {}", accountsContactInfoDto.getContactDetails().get("name"));
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(accountsContactInfoDto);
