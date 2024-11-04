@@ -14,15 +14,32 @@ spring:
     show-sql: true
   config:
     import: "optional:configserver:http://localhost:8071/"
-#  rabbitmq:
-#    host: "localhost"
-#    username: "guest"
-#    password: "guest"
-#    port: 5672
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  info:
+    env:
+      enabled: true
+  endpoint:
+    shutdown:
+      enabled: true
+endpoints:
+  shutdown:
+    enabled: true
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8070/eureka/
+    fetchRegistry: true
+    registerWithEureka: true
+info:
+  app:
+    name: "accounts"
+    description: "ABC Bank Accounts Application"
+    version: 1.0.0
 

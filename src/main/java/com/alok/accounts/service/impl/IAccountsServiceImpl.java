@@ -37,7 +37,7 @@ public class IAccountsServiceImpl implements IAccountsService {
     @Override
     public void createAccount(CustomerDto customerDto) {
         Customer customer = CustomerMapper.mapToCustomer(customerDto, new Customer());
-        Optional<Customer> byMobileNumber = Optional.ofNullable(customerRepository.findByMobileNumber(customerDto.getMobileNumber()));
+        Optional<Customer> byMobileNumber = customerRepository.findByMobileNumber(customerDto.getMobileNumber());
         if(byMobileNumber.isPresent()) {
             throw  new CustomerAlreadyExistsException("Customer already registered with given mobileNumber "
                     + customerDto.getMobileNumber());
@@ -59,7 +59,7 @@ accountsRepository.save(createNewAccount(savedCustomer));
 
     @Override
     public CustomerDto fetchAccount(String mobileNumber) {
-        Customer customer = Optional.ofNullable(customerRepository.findByMobileNumber(mobileNumber))
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
                 () -> new ResourceNotFoundException("Account", "customerId", customer.getCustomerId().toString())
@@ -93,7 +93,7 @@ accountsRepository.save(createNewAccount(savedCustomer));
 
     @Override
     public boolean deleteAccount(String mobileNumber) {
-        Customer customer = Optional.ofNullable(customerRepository.findByMobileNumber(mobileNumber))
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer", "mobileNumber", mobileNumber));
         accountsRepository.deleteByCustomerId(customer.getCustomerId());
         customerRepository.deleteById(customer.getCustomerId());

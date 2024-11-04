@@ -1,5 +1,6 @@
 package com.alok.accounts.mapper;
 
+import com.alok.accounts.dto.CustomerDetailsDto;
 import com.alok.accounts.dto.CustomerDto;
 import com.alok.accounts.entity.Customer;
 
@@ -17,5 +18,11 @@ public class CustomerMapper {
         customer.setEmail(customerDto.getEmail());
         customer.setMobileNumber(customerDto.getMobileNumber());
         return customer;
+    }
+    public static CustomerDetailsDto mapToCustomerDetailsDto(Customer customer, CustomerDetailsDto customerDetailsDto) {
+        customerDetailsDto.setName(customer.getName());
+        customerDetailsDto.setEmail(customer.getEmail());
+        customerDetailsDto.setMobileNumber(customer.getMobileNumber());
+        return customerDetailsDto;
     }
 }
