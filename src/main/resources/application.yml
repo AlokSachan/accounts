@@ -42,4 +42,9 @@ info:
     name: "accounts"
     description: "ABC Bank Accounts Application"
     version: 1.0.0
+logging:
+  level:
+    com:
+      alok:
+        accounts: DEBUG
 
