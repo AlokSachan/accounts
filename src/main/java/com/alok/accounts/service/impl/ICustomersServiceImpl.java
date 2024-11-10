@@ -1,4 +1,4 @@
-package com.alok.accounts.service;
+package com.alok.accounts.service.impl;
 
 import com.alok.accounts.dto.AccountsDto;
 import com.alok.accounts.dto.CardsDto;
@@ -11,9 +11,11 @@ import com.alok.accounts.mapper.AccountsMapper;
 import com.alok.accounts.mapper.CustomerMapper;
 import com.alok.accounts.repository.AccountsRepository;
 import com.alok.accounts.repository.CustomerRepository;
+import com.alok.accounts.service.ICustomersService;
 import com.alok.accounts.service.client.CardsFeignClient;
 import com.alok.accounts.service.client.LoansFeignClient;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +44,14 @@ public class ICustomersServiceImpl implements ICustomersService {
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsDto(accounts, new AccountsDto()));
 
         ResponseEntity<LoansDto> loansDtoResponseEntity = loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
-        customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        if (loansDtoResponseEntity != null) {
+            customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+        }
 
         ResponseEntity<CardsDto> cardsDtoResponseEntity = cardsFeignClient.fetchCardDetails(correlationId, mobileNumber);
-        customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+        if (cardsDtoResponseEntity != null) {
+            customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+        }
 
         return customerDetailsDto;
 
